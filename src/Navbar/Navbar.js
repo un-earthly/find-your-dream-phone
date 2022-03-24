@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../Card/Card';
+import Modal from '../Modal/Modal';
 
 export default function Navbar() {
     const [cardData, setCardData] = useState([])
-    const [search, setSearch] = useState('');
+    const [modal, setModal] = useState({})
+    const [search, setSearch] = useState('iphone');
     const userInput = (e) => {
         setSearch(e.target.value)
     }
@@ -13,6 +15,8 @@ export default function Navbar() {
             .then(res => res.json())
             .then((res) => setCardData(res.data))
     }, [search])
+
+    
     return (
         <>
             <div className="sticky-top bg-dark py-4 w-100 mb-3">
@@ -25,8 +29,7 @@ export default function Navbar() {
                 <div className="row row-cols-1 row-cols-md-3 g-2 align-items-center justify-content-center">
                     {
                         cardData.map((cd) => {
-                            console.log(cd)
-                            return <Card brandName={cd.brand} img={cd.image} phoneName={cd.phone_name} />
+                            return <Card brandName={cd.brand} img={cd.image} key={cd.slug} id={cd.slug} phoneName={cd.phone_name} />
                         })
                     }
                 </div>
